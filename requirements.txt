@@ -4,6 +4,7 @@ anyio
 click
 contourpy
 cycler
+email-validator
 fastapi
 fonttools
 h11
