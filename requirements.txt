@@ -15,6 +15,7 @@ numpy
 packaging
 pandas
 pillow
+psycopg2-binary==2.9.9
 pydantic
 pydantic_core
 pyparsing
@@ -26,12 +27,12 @@ scipy
 seaborn
 six
 sniffio
+sqlalchemy
 starlette
 threadpoolctl
 typing-inspection
 typing_extensions
 tzdata
 uvicorn
-sqlalchemy
 pymongo
 python-dotenv
