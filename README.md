@@ -69,8 +69,8 @@ To design and implement a dual-database architecture that efficiently manages bo
 | Name                 | Role                                       | Responsibilities                                                                                                    |
 | -------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- |
 | **Relebohile Pheko** | *Task 3 – Model Integration & MongoDB API* | Integrated CKD prediction endpoints using MongoDB, implemented ML model logic, and tested deployed API on Render.   |
-| **Teammate 1**       | *Task 1 – Database Design & Setup*         | Designed PostgreSQL schema, created SQL scripts (tables, triggers, sample data), and ensured referential integrity. |
-| **Teammate 2**       | *Task 2 – FastAPI CRUD Operations*         | Built patient and diagnosis CRUD routes, handled request validation, and tested API consistency.                    |
+| **Patricia Mugabo**       | *Task 1 – Database Design & Setup*         | Designed PostgreSQL schema, created SQL scripts (tables, triggers, sample data), and ensured referential integrity. |
+| **Kellia Umuhire**       | *Task 2 – FastAPI CRUD Operations*         | Built patient and diagnosis CRUD routes, handled request validation, and tested API consistency.                    |
 
 > Each member contributed to testing, debugging, and integration across both database layers.
 
