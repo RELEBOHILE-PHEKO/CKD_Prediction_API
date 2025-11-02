@@ -34,4 +34,4 @@ tzdata
 uvicorn
 sqlalchemy
 pymongo
-python-dontev
+python-dotenv
