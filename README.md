@@ -2,7 +2,7 @@
 
 # Chronic Kidney Disease Database and API
 **Swagger UI:** [https://ckd-prediction-api-0wk1.onrender.com/docs](https://ckd-prediction-api-0wk1.onrender.com/docs)  
-**ReDoc:** [https://ckd-prediction-api-0wk1.onrender.com/redoc](https://ckd-prediction-api-0wk1.on
+**ReDoc:** https://ckd-prediction-api-0wk1.onrender.com/redoc
 
 This repository contains the database setup and FastAPI implementation for the Chronic Kidney Disease prediction pipeline.
 
