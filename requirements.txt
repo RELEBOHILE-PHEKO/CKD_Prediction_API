@@ -15,7 +15,7 @@ numpy
 packaging
 pandas
 pillow
-psycopg2-binary==2.9.9
+psycopg[binary]==3.2.1
 pydantic
 pydantic_core
 pyparsing
