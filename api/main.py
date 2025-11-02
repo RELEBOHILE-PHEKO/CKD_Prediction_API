@@ -1,72 +1,42 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import ConfigDict
 
-# ====== MONKEYPATCH: Fix Pydantic MongoDB _id compatibility ======
-# This allows Pydantic models to use fields with leading underscores (like _id)
-# TODO: Remove this when MongoDB schemas are updated with proper model_config
-print("Applying MongoDB Pydantic compatibility patches...")
+# ====== CRITICAL: This must run BEFORE any schema imports ======
+# Monkey-patch Pydantic's model construction to allow _id fields
+import pydantic
+from pydantic._internal._model_construction import ModelMetaclass
 
-try:
-    # Patch patient_history_mongo schemas
-    from api.schemas import patient_history_mongo
+# Store the original __new__ method
+_original_new = ModelMetaclass.__new__
+
+def patched_new(mcs, cls_name, bases, namespace, **kwargs):
+    """Patched ModelMetaclass.__new__ that allows fields starting with underscore"""
+    # Check if any field starts with underscore
+    annotations = namespace.get('__annotations__', {})
+    has_underscore_fields = any(key.startswith('_') for key in annotations.keys())
     
-    patient_history_models = [
-        'PatientHistoryBase',
-        'PatientHistoryCreate', 
-        'PatientHistoryUpdate', 
-        'PatientHistoryResponse'
-    ]
-    
-    patched_count = 0
-    for model_name in patient_history_models:
-        if hasattr(patient_history_mongo, model_name):
-            model = getattr(patient_history_mongo, model_name)
-            model.model_config = ConfigDict(
+    if has_underscore_fields:
+        # Force populate_by_name to True for models with underscore fields
+        if 'model_config' not in namespace:
+            from pydantic import ConfigDict
+            namespace['model_config'] = ConfigDict(
                 populate_by_name=True,
                 arbitrary_types_allowed=True
             )
-            print(f"  Patched {model_name} (patient_history_mongo)")
-            patched_count += 1
-            
-except ImportError as e:
-    print(f"Could not import patient_history_mongo schemas: {e}")
-except Exception as e:
-    print(f"Warning: Could not patch patient_history_mongo schemas: {e}")
-
-try:
-    # Patch prediction_mongo schemas
-    from api.schemas import prediction_mongo
+        elif hasattr(namespace['model_config'], 'update'):
+            namespace['model_config'].update({
+                'populate_by_name': True,
+                'arbitrary_types_allowed': True
+            })
     
-    prediction_models = [
-        'PredictionBase',
-        'PredictionCreate',
-        'PredictionUpdate',
-        'PredictionResponse'
-    ]
-    
-    for model_name in prediction_models:
-        if hasattr(prediction_mongo, model_name):
-            model = getattr(prediction_mongo, model_name)
-            model.model_config = ConfigDict(
-                populate_by_name=True,
-                arbitrary_types_allowed=True
-            )
-            print(f"  Patched {model_name} (prediction_mongo)")
-            patched_count += 1
-            
-except ImportError as e:
-    print(f"Could not import prediction_mongo schemas: {e}")
-except Exception as e:
-    print(f"Warning: Could not patch prediction_mongo schemas: {e}")
+    return _original_new(mcs, cls_name, bases, namespace, **kwargs)
 
-if patched_count > 0:
-    print(f"Successfully patched {patched_count} model(s) for MongoDB compatibility")
-else:
-    print("No models found to patch")
-# ====== END MONKEYPATCH ======
+# Apply the patch
+ModelMetaclass.__new__ = staticmethod(patched_new)
+print("Applied Pydantic underscore field compatibility patch")
+# ====== END PATCH ======
 
-# Your existing router imports
+# Now import everything else - schemas will use the patched version
 from api.routers import (
     diagnoses,
     lab_results,
