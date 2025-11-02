@@ -19,8 +19,9 @@ This repository contains the database setup for the Chronic Kidney Disease predi
    # Create database and user (run in psql)
    CREATE DATABASE ckd_database;
    
-   # Import schema and data (run in psql or pgAdmin)
-   \i sql/01_schema.sql
-   \i sql/02_procedures.sql
-   \i sql/03_triggers.sql
-   \i sql/04_sample_data.sql
+   # Run the SQL files in this order:
+   ```bash
+   psql -U your_username -d ckd_database -f sql/schema.sql
+   psql -U your_username -d ckd_database -f sql/procedures.sql
+   psql -U your_username -d ckd_database -f sql/triggers.sql
+   psql -U your_username -d ckd_database -f sql/sample_data.sql
