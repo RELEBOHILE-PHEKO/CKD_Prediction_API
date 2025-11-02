@@ -14,7 +14,7 @@ To design and implement a dual-database architecture that efficiently manages bo
 
 ---
 
-## ⚙️ Technologies
+##  Technologies
 
 * **FastAPI** — RESTful API framework
 * **PostgreSQL** — Relational data (patients, labs, diagnoses)
@@ -36,7 +36,7 @@ To design and implement a dual-database architecture that efficiently manages bo
 
 ---
 
-## 🧪 How to Run
+## How to Run
 
 1. **Clone the repo**
 
