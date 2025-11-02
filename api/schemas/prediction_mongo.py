@@ -21,7 +21,7 @@ class PredictionUpdate(BaseModel):
 
 
 class PredictionResponse(BaseModel):
-    _id: str = Field(..., alias="_id")
+    id: str = Field(..., alias="_id")
     patient_id: int
     model_name: str
     model_version: str
