@@ -17,7 +17,7 @@ class PatientHistoryUpdate(BaseModel):
 
 
 class PatientHistoryResponse(BaseModel):
-    _id: str = Field(..., alias="_id")
+    id: str = Field(..., alias="_id")
     patient_id: int
     entry_type: str
     data: Dict[str, Any]
