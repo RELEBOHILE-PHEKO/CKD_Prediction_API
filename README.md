@@ -1,6 +1,8 @@
 # CKD_Prediction_API
 
 # Chronic Kidney Disease Database and API
+**Swagger UI:** [https://ckd-prediction-api-0wk1.onrender.com/docs](https://ckd-prediction-api-0wk1.onrender.com/docs)  
+**ReDoc:** [https://ckd-prediction-api-0wk1.onrender.com/redoc](https://ckd-prediction-api-0wk1.on
 
 This repository contains the database setup and FastAPI implementation for the Chronic Kidney Disease prediction pipeline.
 
@@ -138,13 +140,15 @@ Swagger UI: http://localhost:8000/docs
 ReDoc: http://localhost:8000/redoc
 
 CRUD Endpoints Overview
-Resource	Endpoint	Method	Description
-Patients	/api/v1/patients/	GET/POST	Retrieve all or create a patient
-	/api/v1/patients/{patient_id}	GET/PUT/DELETE	Get, update, or delete patient
-Medical History	/api/v1/medical-history/	GET/POST	Retrieve or create medical histories
-Vital Signs	/api/v1/vital-signs/	GET/POST	Retrieve or create vital signs
-Lab Results	/api/v1/lab-results/	GET/POST	Retrieve or create lab results
-Diagnoses	/api/v1/diagnoses/	GET/POST	Retrieve or create diagnoses
+| Resource        | Endpoint                        | Method             | Description                          |
+| --------------- | ------------------------------- | ------------------ | ------------------------------------ |
+| Patients        | `/api/v1/patients/`             | GET / POST         | Retrieve all or create a patient     |
+|                 | `/api/v1/patients/{patient_id}` | GET / PUT / DELETE | Get, update, or delete patient       |
+| Medical History | `/api/v1/medical-history/`      | GET / POST         | Retrieve or create medical histories |
+| Vital Signs     | `/api/v1/vital-signs/`          | GET / POST         | Retrieve or create vital signs       |
+| Lab Results     | `/api/v1/lab-results/`          | GET / POST         | Retrieve or create lab results       |
+| Diagnoses       | `/api/v1/diagnoses/`            | GET / POST         | Retrieve or create diagnoses         |
+
 
 MongoDB Endpoints (flexible schema):
 
@@ -152,20 +156,17 @@ MongoDB Endpoints (flexible schema):
 
 /api/v1/mongo/predictions/ – Create and retrieve prediction records
 
-Task 3 - CKD Predictions
-Prediction Endpoints (MongoDB)
+#CDK Predictions
 
-POST /api/v1/mongo/predictions/ – Submit patient data to generate a prediction
+| Endpoint                                         | Method | Description                                                |
+| ------------------------------------------------ | ------ | ---------------------------------------------------------- |
+| `/api/v1/mongo/predictions/`                     | POST   | Submit patient data to generate a prediction               |
+| `/api/v1/mongo/predictions/`                     | GET    | Get all predictions (filterable by patient_id, model_name) |
+| `/api/v1/mongo/predictions/patient/{patient_id}` | GET    | Get predictions for a patient                              |
+| `/api/v1/mongo/predictions/{prediction_id}`      | GET    | Get a prediction by ID                                     |
+| `/api/v1/mongo/predictions/{prediction_id}`      | PUT    | Update a prediction                                        |
+| `/api/v1/mongo/predictions/{prediction_id}`      | DELETE | Delete a prediction                                        |
 
-GET /api/v1/mongo/predictions/ – Get all predictions (filterable by patient_id, model_name)
-
-GET /api/v1/mongo/predictions/patient/{patient_id} – Get predictions for a patient
-
-GET /api/v1/mongo/predictions/{prediction_id} – Get a prediction by ID
-
-PUT /api/v1/mongo/predictions/{prediction_id} – Update a prediction
-
-DELETE /api/v1/mongo/predictions/{prediction_id} – Delete a prediction
 
 Example Request (POST /predictions/)
 {
@@ -203,7 +204,7 @@ Testing the API
 
 Swagger UI: https://ckd-prediction-api-0wk1.onrender.com/docs
 
-Paste trequest JSON and click Execute.
+Paste request JSON and click Execute.
 
 Render Base URL: https://ckd-prediction-api-0wk1.onrender.com/api/v1/mongo/predictions/
 
