@@ -16,18 +16,26 @@ def patched_new(mcs, cls_name, bases, namespace, **kwargs):
     has_underscore_fields = any(key.startswith('_') for key in annotations.keys())
     
     if has_underscore_fields:
-        # Force populate_by_name to True for models with underscore fields
-        if 'model_config' not in namespace:
+        # Check if using old-style Config class
+        if 'Config' in namespace:
+            config_class = namespace['Config']
+            # Add populate_by_name to existing Config
+            if not hasattr(config_class, 'populate_by_name'):
+                config_class.populate_by_name = True
+            if not hasattr(config_class, 'arbitrary_types_allowed'):
+                config_class.arbitrary_types_allowed = True
+        # Check if using new-style model_config
+        elif 'model_config' in namespace:
+            if isinstance(namespace['model_config'], dict):
+                namespace['model_config']['populate_by_name'] = True
+                namespace['model_config']['arbitrary_types_allowed'] = True
+        # No config exists, create one
+        else:
             from pydantic import ConfigDict
             namespace['model_config'] = ConfigDict(
                 populate_by_name=True,
                 arbitrary_types_allowed=True
             )
-        elif hasattr(namespace['model_config'], 'update'):
-            namespace['model_config'].update({
-                'populate_by_name': True,
-                'arbitrary_types_allowed': True
-            })
     
     return _original_new(mcs, cls_name, bases, namespace, **kwargs)
 
