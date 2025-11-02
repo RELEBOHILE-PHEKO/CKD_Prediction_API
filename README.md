@@ -115,3 +115,96 @@ This repository contains the database setup and FastAPI implementation for the C
 - `GET /api/v1/mongo/predictions/{prediction_id}` - Get prediction by ID
 - `PUT /api/v1/mongo/predictions/{prediction_id}` - Update prediction
 - `DELETE /api/v1/mongo/predictions/{prediction_id}` - Delete prediction
+
+**FastAPI CRUD Endpoints8**
+Environment Variables
+
+Create a .env file in the root directory:
+
+DATABASE_URL=postgresql://postgres:yourpassword@localhost/ckd_database
+MONGODB_URI=mongodb://localhost:27017/
+
+Running the API
+# Install dependencies
+pip install -r requirements.txt
+
+# Start the server
+uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
+
+API Documentation
+
+Swagger UI: http://localhost:8000/docs
+
+ReDoc: http://localhost:8000/redoc
+
+CRUD Endpoints Overview
+Resource	Endpoint	Method	Description
+Patients	/api/v1/patients/	GET/POST	Retrieve all or create a patient
+	/api/v1/patients/{patient_id}	GET/PUT/DELETE	Get, update, or delete patient
+Medical History	/api/v1/medical-history/	GET/POST	Retrieve or create medical histories
+Vital Signs	/api/v1/vital-signs/	GET/POST	Retrieve or create vital signs
+Lab Results	/api/v1/lab-results/	GET/POST	Retrieve or create lab results
+Diagnoses	/api/v1/diagnoses/	GET/POST	Retrieve or create diagnoses
+
+MongoDB Endpoints (flexible schema):
+
+/api/v1/mongo/patient-history/ – Create and retrieve patient history entries
+
+/api/v1/mongo/predictions/ – Create and retrieve prediction records
+
+Task 3 - CKD Predictions
+Prediction Endpoints (MongoDB)
+
+POST /api/v1/mongo/predictions/ – Submit patient data to generate a prediction
+
+GET /api/v1/mongo/predictions/ – Get all predictions (filterable by patient_id, model_name)
+
+GET /api/v1/mongo/predictions/patient/{patient_id} – Get predictions for a patient
+
+GET /api/v1/mongo/predictions/{prediction_id} – Get a prediction by ID
+
+PUT /api/v1/mongo/predictions/{prediction_id} – Update a prediction
+
+DELETE /api/v1/mongo/predictions/{prediction_id} – Delete a prediction
+
+Example Request (POST /predictions/)
+{
+  "patient_id": 1,
+  "model_name": "CKD_Predictor",
+  "data": {
+    "age": 50,
+    "blood_pressure": 140,
+    "blood_sugar": 120,
+    "creatinine": 1.5,
+    "eGFR": 45
+  },
+  "metadata": {}
+
+Example Response
+
+curl -X 'POST' \
+  'https://ckd-prediction-api-0wk1.onrender.com/api/v1/patients/' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d 'Example Request (POST /predictions/)
+{
+  "patient_id": 1,
+  "model_name": "CKD_Predictor",
+  "data": {
+    "age": 50,
+    "blood_pressure": 140,
+    "blood_sugar": 120,
+    "creatinine": 1.5,
+    "eGFR": 45
+  },
+  "metadata": {}'
+
+Testing the API
+
+Swagger UI: https://ckd-prediction-api-0wk1.onrender.com/docs
+
+Paste trequest JSON and click Execute.
+
+Render Base URL: https://ckd-prediction-api-0wk1.onrender.com/api/v1/mongo/predictions/
+
+Test endpoints in Postman, curl, or Swagger.
